@@ -1,4 +1,6 @@
 import 'package:eat_more/pages/bottomnav.dart';
+import 'package:eat_more/pages/login.dart';
+import 'package:eat_more/pages/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Eat More App',
       theme: ThemeData(),
-      home: const BottomNav(),
+      home: const SignUp(),
     );
   }
 }

@@ -1,17 +1,17 @@
-import 'package:eat_more/pages/signup.dart';
-import 'package:eat_more/widget/widget_support.dart';
+import 'package:eat_more/pages/login.dart';
 import 'package:flutter/material.dart';
+import 'package:eat_more/widget/widget_support.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LogIn extends StatefulWidget {
-  const LogIn({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<LogIn> createState() => _LogInState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LogInState extends State<LogIn> {
+class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,15 +61,23 @@ class _LogInState extends State<LogIn> {
                       child: Container(
                         padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 2,
+                        height: MediaQuery.of(context).size.height / 1.8,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Column(
                           children: [
                             SizedBox(height: 30.0),
-                            Text("Login",
+                            Text("Sign up",
                                 style: AppWidget.HeadlineTextFieldStyle()),
+                            SizedBox(height: 30.0),
+                            TextField(
+                              decoration: InputDecoration(
+                                hintText: "Name",
+                                hintStyle: AppWidget.semiBoldTextFieldStyle(),
+                                prefixIcon: Icon(Icons.person_outlined),
+                              ),
+                            ),
                             TextField(
                               decoration: InputDecoration(
                                 hintText: "Email",
@@ -85,14 +93,6 @@ class _LogInState extends State<LogIn> {
                                 prefixIcon: Icon(Icons.password_outlined),
                               ),
                             ),
-                            SizedBox(height: 20.0),
-                            Container(
-                              alignment: Alignment.topRight,
-                              child: Text(
-                                "Forgot Password?",
-                                style: AppWidget.semiBoldTextFieldStyle(),
-                              ),
-                            ),
                             SizedBox(height: 80.0),
                             Material(
                               elevation: 5.0,
@@ -104,7 +104,7 @@ class _LogInState extends State<LogIn> {
                                     color: Color(0xFFff5c30),
                                     borderRadius: BorderRadius.circular(20.0)),
                                 child: Center(
-                                  child: Text("LOGIN",
+                                  child: Text("SIGN UP",
                                       style: GoogleFonts.poppins(
                                           textStyle: TextStyle(
                                               color: Colors.white,
@@ -120,12 +120,10 @@ class _LogInState extends State<LogIn> {
                     SizedBox(height: 70.0),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUp()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => LogIn()));
                       },
-                      child: Text("Don't have an account?Sign Up",
+                      child: Text("Allready have an account? Login",
                           style: AppWidget.semiBoldTextFieldStyle()),
                     ),
                   ],
