@@ -1,6 +1,7 @@
 import 'package:eat_more/pages/bottomnav.dart';
 import 'package:eat_more/pages/home.dart';
 import 'package:eat_more/pages/login.dart';
+import 'package:eat_more/pages/order.dart';
 import 'package:eat_more/pages/profile.dart';
 import 'package:eat_more/pages/signup.dart';
 import 'package:flutter/material.dart';
