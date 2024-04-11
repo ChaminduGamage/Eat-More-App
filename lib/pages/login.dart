@@ -1,3 +1,4 @@
+import 'package:eat_more/admin/home_admin.dart';
 import 'package:eat_more/pages/bottomnav.dart';
 import 'package:eat_more/pages/signup.dart';
 import 'package:eat_more/widget/widget_support.dart';
@@ -24,8 +25,14 @@ class _LogInState extends State<LogIn> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const BottomNav()));
+
+      if (email == "admin@gmail.com") {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const HomeAdmin()));
+      } else {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const BottomNav()));
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

@@ -32,7 +32,7 @@ class _SignUpState extends State<SignUp> {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
 
-        ScaffoldMessenger.of(context).showSnackBar((SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar((const SnackBar(
             backgroundColor: Colors.redAccent,
             content: Text(
               "Registered Successfully",
@@ -52,18 +52,18 @@ class _SignUpState extends State<SignUp> {
         await SharedPreferenceHelper().saveUserId(Id);
 
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => BottomNav()));
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const BottomNav()));
       } on FirebaseException catch (e) {
         if (e.code == 'weak-password') {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               backgroundColor: Colors.orangeAccent,
               content: Text(
                 "Password Provided is too Weak",
                 style: TextStyle(fontSize: 18.0),
               )));
         } else if (e.code == "email-already-in-use") {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               backgroundColor: Colors.orangeAccent,
               content: Text(
                 "Account Already exsists",
@@ -84,7 +84,7 @@ class _SignUpState extends State<SignUp> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 2.5,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -100,7 +100,7 @@ class _SignUpState extends State<SignUp> {
                     top: MediaQuery.of(context).size.height / 3.5),
                 height: MediaQuery.of(context).size.height / 1,
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(40),
                       topRight: Radius.circular(40)),
@@ -239,7 +239,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 80.0),
+                    const SizedBox(height: 80.0),
                     GestureDetector(
                         onTap: () {
                           Navigator.push(

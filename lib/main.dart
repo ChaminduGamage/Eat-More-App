@@ -1,5 +1,6 @@
-import 'package:eat_more/pages/onboard.dart';
 import 'package:eat_more/firebase_options.dart';
+import 'package:eat_more/pages/signup.dart';
+import 'package:eat_more/pages/wallet.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Eat More App',
       theme: ThemeData(),
-      home: const Onboard(),
+      home: SignUp(),
     );
   }
 }
