@@ -1,3 +1,5 @@
+import 'package:eat_more/admin/admin_login.dart';
+import 'package:eat_more/admin/home_admin.dart';
 import 'package:eat_more/pages/bottomnav.dart';
 import 'package:eat_more/pages/home.dart';
 import 'package:eat_more/pages/login.dart';
