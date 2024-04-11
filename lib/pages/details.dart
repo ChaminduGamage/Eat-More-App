@@ -3,7 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:eat_more/widget/widget_support.dart';
 
 class Details extends StatefulWidget {
-  const Details({super.key});
+  String image, name, detail, price;
+  Details(
+      {required this.detail,
+      required this.image,
+      required this.name,
+      required this.price});
 
   @override
   State<Details> createState() => _DetailsState();
@@ -26,8 +31,8 @@ class _DetailsState extends State<Details> {
                       Navigator.pop(context);
                     },
                     child: Icon(Icons.arrow_back_ios, color: Colors.black)),
-                Image.asset(
-                  "images/SeafoodCheeseKottu.png",
+                Image.network(
+                  widget.image,
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 2,
                   fit: BoxFit.cover,
@@ -39,12 +44,8 @@ class _DetailsState extends State<Details> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Seafood ",
+                          widget.name,
                           style: AppWidget.semiBoldTextFieldStyle(),
-                        ),
-                        Text(
-                          "Cheese Kottu",
-                          style: AppWidget.boldTextFieldStyle(),
                         ),
                       ],
                     ),
@@ -84,7 +85,7 @@ class _DetailsState extends State<Details> {
                 ),
                 SizedBox(height: 20.0),
                 Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                  widget.detail,
                   maxLines: 4,
                   style: AppWidget.LightTextFieldStyle(),
                 ),
@@ -113,7 +114,7 @@ class _DetailsState extends State<Details> {
                           style: AppWidget.semiBoldTextFieldStyle(),
                         ),
                         Text(
-                          "Rs.2340.00",
+                          "\Rs." + widget.price,
                           style: AppWidget.HeadlineTextFieldStyle(),
                         ),
                       ],
