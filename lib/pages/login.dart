@@ -3,6 +3,7 @@ import 'package:eat_more/pages/signup.dart';
 import 'package:eat_more/widget/widget_support.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -51,7 +52,8 @@ class _LogInState extends State<LogIn> {
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
+                height: MediaQuery.of(context).size.height / 2.5,
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -127,7 +129,6 @@ class _LogInState extends State<LogIn> {
                                     prefixIcon:
                                         const Icon(Icons.email_outlined)),
                               ),
-
                               const SizedBox(
                                 height: 30.0,
                               ),
@@ -178,24 +179,27 @@ class _LogInState extends State<LogIn> {
                                   }
                                   userLogin();
                                 },
-                                 Material(
-                              elevation: 5.0,
-                              borderRadius: BorderRadius.circular(20.0),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
-                                width: 200,
-                                decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                child: Center(
-                                  child: Text("LOGIN",
-                                      style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                              color: Colors.white,
-                                          fontSize: 18.0,
-                                          fontFamily: 'Poppins1',
-                                          fontWeight: FontWeight.bold),
-                                    )),
+                                child: Material(
+                                  elevation: 5.0,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    width: 200,
+                                    decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius:
+                                            BorderRadius.circular(20.0)),
+                                    child: Center(
+                                      child: Text("LOGIN",
+                                          style: GoogleFonts.poppins(
+                                            textStyle: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18.0,
+                                                fontFamily: 'Poppins1',
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -204,8 +208,7 @@ class _LogInState extends State<LogIn> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 80.0),
-                    
+                    const SizedBox(height: 80.0),
                     GestureDetector(
                         onTap: () {
                           Navigator.push(
