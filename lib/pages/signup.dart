@@ -27,8 +27,8 @@ class _SignUpState extends State<SignUp> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Color(0xFFff5c30),
-                      Color(0xFFe74b1a),
+                      Colors.black,
+                      Color(0xFF154C79),
                     ],
                   ),
                 ),
@@ -101,7 +101,7 @@ class _SignUpState extends State<SignUp> {
                                 padding: EdgeInsets.symmetric(vertical: 8.0),
                                 width: 200,
                                 decoration: BoxDecoration(
-                                    color: Color(0xFFff5c30),
+                                    color: Colors.black,
                                     borderRadius: BorderRadius.circular(20.0)),
                                 child: Center(
                                   child: Text("SIGN UP",
@@ -117,14 +117,14 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 70.0),
+                    SizedBox(height: 80.0),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) => LogIn()));
                       },
                       child: Text("Allready have an account? Login",
-                          style: AppWidget.semiBoldTextFieldStyle()),
+                          style: AppWidget.regularTextFieldStyle()),
                     ),
                   ],
                 ),

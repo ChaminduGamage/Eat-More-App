@@ -27,8 +27,8 @@ class _LogInState extends State<LogIn> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Color(0xFFff5c30),
-                      Color(0xFFe74b1a),
+                      Colors.black,
+                      Color(0xFF154C79),
                     ],
                   ),
                 ),
@@ -101,7 +101,7 @@ class _LogInState extends State<LogIn> {
                                 padding: EdgeInsets.symmetric(vertical: 8.0),
                                 width: 200,
                                 decoration: BoxDecoration(
-                                    color: Color(0xFFff5c30),
+                                    color: Colors.black,
                                     borderRadius: BorderRadius.circular(20.0)),
                                 child: Center(
                                   child: Text("LOGIN",
@@ -117,7 +117,7 @@ class _LogInState extends State<LogIn> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 70.0),
+                    SizedBox(height: 80.0),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -126,7 +126,7 @@ class _LogInState extends State<LogIn> {
                                 builder: (context) => const SignUp()));
                       },
                       child: Text("Don't have an account?Sign Up",
-                          style: AppWidget.semiBoldTextFieldStyle()),
+                          style: AppWidget.regularTextFieldStyle()),
                     ),
                   ],
                 ),
