@@ -54,19 +54,37 @@ class _SignUpState extends State<SignUp> {
             context, MaterialPageRoute(builder: (context) => const LogIn()));
       } on FirebaseException catch (e) {
         if (e.code == 'weak-password') {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              backgroundColor: Colors.orangeAccent,
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.black,
               content: Text(
                 "Password Provided is too Weak",
-                style: TextStyle(fontSize: 18.0),
-              )));
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+            ),
+          );
         } else if (e.code == "email-already-in-use") {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              backgroundColor: Colors.orangeAccent,
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.black,
               content: Text(
                 "Account Already exsists",
-                style: TextStyle(fontSize: 18.0),
-              )));
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+            ),
+          );
         }
       }
     }
