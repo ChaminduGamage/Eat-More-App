@@ -1,12 +1,14 @@
-import 'package:eat_more/pages/bottomnav.dart';
-import 'package:eat_more/pages/home.dart';
-import 'package:eat_more/pages/login.dart';
-import 'package:eat_more/pages/profile.dart';
+import 'package:eat_more/firebase_options.dart';
 import 'package:eat_more/pages/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Eat More App',
       theme: ThemeData(),
-      home: const SignUp(),
+      home: SignUp(),
     );
   }
 }
