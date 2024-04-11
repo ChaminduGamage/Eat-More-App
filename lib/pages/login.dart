@@ -51,15 +51,16 @@ class _LogInState extends State<LogIn> {
             children: [
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 2.5,
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                      Color(0xFFff5c30),
-                      Color(0xFFe74b1a),
-                    ])),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.black,
+                      Color(0xFF154C79),
+                    ],
+                  ),
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(
@@ -126,6 +127,7 @@ class _LogInState extends State<LogIn> {
                                     prefixIcon:
                                         const Icon(Icons.email_outlined)),
                               ),
+
                               const SizedBox(
                                 height: 30.0,
                               ),
@@ -176,22 +178,20 @@ class _LogInState extends State<LogIn> {
                                   }
                                   userLogin();
                                 },
-                                child: Material(
-                                  elevation: 5.0,
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                        color: const Color(0Xffff5722),
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: const Center(
-                                        child: Text(
-                                      "LOGIN",
-                                      style: TextStyle(
-                                          color: Colors.white,
+                                 Material(
+                              elevation: 5.0,
+                              borderRadius: BorderRadius.circular(20.0),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                width: 200,
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: Center(
+                                  child: Text("LOGIN",
+                                      style: GoogleFonts.poppins(
+                                          textStyle: TextStyle(
+                                              color: Colors.white,
                                           fontSize: 18.0,
                                           fontFamily: 'Poppins1',
                                           fontWeight: FontWeight.bold),
@@ -204,9 +204,8 @@ class _LogInState extends State<LogIn> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 70.0,
-                    ),
+                    SizedBox(height: 80.0),
+                    
                     GestureDetector(
                         onTap: () {
                           Navigator.push(

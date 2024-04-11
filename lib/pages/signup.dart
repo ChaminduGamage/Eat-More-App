@@ -89,8 +89,8 @@ class _SignUpState extends State<SignUp> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Color(0xFFff5c30),
-                      Color(0xFFe74b1a),
+                      Colors.black,
+                      Color(0xFF154C79),
                     ],
                   ),
                 ),
@@ -145,6 +145,7 @@ class _SignUpState extends State<SignUp> {
                               const SizedBox(
                                 height: 30.0,
                               ),
+
                               TextFormField(
                                 controller: nameController,
                                 validator: (val) {
@@ -219,7 +220,8 @@ class _SignUpState extends State<SignUp> {
                                         vertical: 8.0),
                                     width: 200,
                                     decoration: BoxDecoration(
-                                        color: Color(0xFFff5c30),
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(20.0)),
                                         borderRadius:
                                             BorderRadius.circular(20)),
                                     child: const Center(
@@ -239,9 +241,8 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 70.0,
-                    ),
+                    SizedBox(height: 80.0),
+               
                     GestureDetector(
                         onTap: () {
                           Navigator.push(
