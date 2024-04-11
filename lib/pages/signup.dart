@@ -145,7 +145,6 @@ class _SignUpState extends State<SignUp> {
                               const SizedBox(
                                 height: 30.0,
                               ),
-
                               TextFormField(
                                 controller: nameController,
                                 validator: (val) {
@@ -220,10 +219,9 @@ class _SignUpState extends State<SignUp> {
                                         vertical: 8.0),
                                     width: 200,
                                     decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(20.0)),
+                                        color: Colors.black,
                                         borderRadius:
-                                            BorderRadius.circular(20)),
+                                            BorderRadius.circular(20.0)),
                                     child: const Center(
                                         child: Text(
                                       "SIGN UP",
@@ -242,7 +240,6 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     SizedBox(height: 80.0),
-               
                     GestureDetector(
                         onTap: () {
                           Navigator.push(
