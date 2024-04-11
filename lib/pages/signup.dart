@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eat_more/pages/bottomnav.dart';
 import 'package:eat_more/pages/login.dart';
 import 'package:eat_more/services/database.dart';
 import 'package:eat_more/services/shared_pref.dart';
@@ -52,8 +50,8 @@ class _SignUpState extends State<SignUp> {
         await SharedPreferenceHelper().saveUserId(Id);
 
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const BottomNav()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const LogIn()));
       } on FirebaseException catch (e) {
         if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

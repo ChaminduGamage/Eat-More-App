@@ -1,4 +1,5 @@
 import 'package:eat_more/pages/order.dart';
+import 'package:eat_more/services/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:eat_more/pages/details.dart';
 import 'package:eat_more/widget/widget_support.dart';
@@ -11,7 +12,27 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String? profile, name, email;
   bool icecream = false, pizza = false, salad = false, burger = false;
+
+  getthesharedpref() async {
+    profile = await SharedPreferenceHelper().getUserProfile();
+    name = await SharedPreferenceHelper().getUserName();
+    email = await SharedPreferenceHelper().getUserEmail();
+    setState(() {});
+  }
+
+  onthisload() async {
+    await getthesharedpref();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    onthisload();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +49,7 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Hello Chamindu,",
+                    "Hello ${name ?? ''},",
                     style: AppWidget.boldTextFieldStyle(),
                   ),
                   Container(
