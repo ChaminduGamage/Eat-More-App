@@ -14,7 +14,7 @@ class AddFood extends StatefulWidget {
 }
 
 class _AddFoodState extends State<AddFood> {
-  final List<String> foodItems = ['Burger', 'Pizza'];
+  final List<String> foodItems = ['Burger', 'Pizza', 'Ice-Cream', 'Salad'];
   String? value;
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
