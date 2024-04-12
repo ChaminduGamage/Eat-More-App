@@ -67,6 +67,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Container(
         child: Column(
           children: [
@@ -106,10 +107,12 @@ class _ProfileState extends State<Profile> {
                                       )
                                     : Image.network(
                                         profile!,
+
                                         height: 120,
                                         width: 120,
                                         fit: BoxFit.cover,
                                       ),
+
                               )
                             : Image.file(
                                 selectedImage!,
