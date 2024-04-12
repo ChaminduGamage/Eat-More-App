@@ -12,7 +12,7 @@ class DatabaseMethods {
     return await FirebaseFirestore.instance
         .collection("users")
         .doc(id)
-        .update({"wallet": amount});
+        .update({"Wallet": amount});
   }
 
   Future addFoodItem(Map<String, dynamic> userInfoMap, String name) async {
@@ -37,5 +37,14 @@ class DatabaseMethods {
         .doc(id)
         .collection("Cart")
         .snapshots();
+  }
+
+  Future deleteFoodFromCart(String cartItemId, String userId) async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userId)
+        .collection("Cart")
+        .doc(cartItemId) // Use the cart item ID instead of userId
+        .delete();
   }
 }

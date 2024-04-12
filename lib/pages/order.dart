@@ -4,9 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eat_more/services/database.dart';
 import 'package:eat_more/services/shared_pref.dart';
 import 'package:eat_more/widget/widget_support.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Order extends StatefulWidget {
   const Order({super.key});
@@ -17,7 +15,7 @@ class Order extends StatefulWidget {
 
 class _OrderState extends State<Order> {
   Stream? foodStream;
-  String? id;
+  String? id, wallet;
   int total = 0;
 
   void startTimer() {
@@ -28,12 +26,15 @@ class _OrderState extends State<Order> {
 
   getthesharedpref() async {
     id = await SharedPreferenceHelper().getUserId();
+    wallet = await SharedPreferenceHelper().getUserWallet();
+
     setState(() {});
   }
 
   ontheload() async {
     await getthesharedpref();
     foodStream = await DatabaseMethods().getFoodCart(id!);
+
     setState(() {});
   }
 
@@ -56,8 +57,7 @@ class _OrderState extends State<Order> {
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     DocumentSnapshot ds = snapshot.data.docs[index];
-                    int productTotal =
-                        int.parse(ds["Total"]) * int.parse(ds["Quantity"]);
+                    int productTotal = int.parse(ds["Total"]);
                     total = total + productTotal;
                     return Container(
                       margin: EdgeInsets.only(
@@ -71,6 +71,12 @@ class _OrderState extends State<Order> {
                           padding: EdgeInsets.all(10),
                           child: Row(
                             children: [
+                              IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    DatabaseMethods().deleteFoodFromCart(ds.id,
+                                        id!); // ds.id is the cart item ID
+                                  }),
                               Container(
                                 height: 70.0,
                                 width: 30.0,
@@ -157,19 +163,29 @@ class _OrderState extends State<Order> {
             SizedBox(
               height: 20.0,
             ),
-            Container(
-                padding: EdgeInsets.symmetric(vertical: 5.0),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(10.0)),
-                margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-                child: Center(
-                    child: Text("CheckOut",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold)))),
+            GestureDetector(
+              onTap: () async {
+                int amount = int.parse(wallet!) - total;
+                await DatabaseMethods()
+                    .UpdateUserWallet(id!, amount.toString());
+                await SharedPreferenceHelper()
+                    .saveUserWallet(amount.toString());
+              },
+              child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.0),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(10.0)),
+                  margin:
+                      EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+                  child: Center(
+                      child: Text("CheckOut",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold)))),
+            ),
           ],
         ),
       ),
