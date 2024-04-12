@@ -38,6 +38,7 @@ class _SignUpState extends State<SignUp> {
               "Registered Successfully",
               style: TextStyle(fontSize: 20.0),
             ))));
+
         String Id = randomAlphaNumeric(10);
         Map<String, dynamic> addUserInfo = {
           "Name": nameController.text,
@@ -127,7 +128,7 @@ class _SignUpState extends State<SignUp> {
                       child: Container(
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 1.8,
+                        height: MediaQuery.of(context).size.height / 1.5,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20)),
