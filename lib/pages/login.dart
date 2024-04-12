@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eat_more/admin/home_admin.dart';
 import 'package:eat_more/pages/bottomnav.dart';
 import 'package:eat_more/pages/signup.dart';
+import 'package:eat_more/services/shared_pref.dart';
 import 'package:eat_more/widget/widget_support.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,8 @@ class _LogInState extends State<LogIn> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
+      await SharedPreferenceHelper().saveUserEmail(userEmailController.text);
+
       if (email == "admin@gmail.com") {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const HomeAdmin()));
@@ -48,6 +52,30 @@ class _LogInState extends State<LogIn> {
         )));
       }
     }
+  }
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final firestoreInstance = FirebaseFirestore.instance;
+
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _auth.authStateChanges().listen((event) {
+      setState(() {
+        _user = event;
+        if (_user != null) {
+          if (_user!.email == "admin@gmail.com") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const HomeAdmin()));
+          } else {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const BottomNav()));
+          }
+        }
+      });
+    });
   }
 
   @override

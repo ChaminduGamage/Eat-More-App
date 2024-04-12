@@ -1,7 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eat_more/pages/order.dart';
+import 'package:eat_more/pages/profile.dart';
+import 'package:eat_more/services/database.dart';
+import 'package:eat_more/services/shared_pref.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:eat_more/pages/details.dart';
 import 'package:eat_more/widget/widget_support.dart';
+import 'package:flutter/widgets.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,7 +17,181 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool icecream = false, pizza = false, salad = false, burger = false;
+  String? profile, name, email;
+  bool icecream = false, pizza = true, salad = false, burger = false;
+
+  Stream? foodItemStream;
+
+  getthesharedpref() async {
+    profile = await SharedPreferenceHelper().getUserProfile();
+    name = await SharedPreferenceHelper().getUserName();
+    email = await SharedPreferenceHelper().getUserEmail();
+    setState(() {});
+  }
+
+  onthisload() async {
+    await getthesharedpref();
+    foodItemStream = await DatabaseMethods().getFoodItems("Pizza");
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    onthisload();
+    super.initState();
+  }
+
+  Widget allItems() {
+    return StreamBuilder(
+        stream: foodItemStream,
+        builder: (context, AsyncSnapshot snapshot) {
+          return snapshot.hasData
+              ? ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: snapshot.data.docs.length,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot ds = snapshot.data.docs[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Details(
+                                    detail: ds["Detail"],
+                                    image: ds["Image"],
+                                    name: ds["Name"],
+                                    price: ds["Price"])));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(4),
+                        child: Material(
+                          elevation: 5.0,
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Container(
+                            padding: const EdgeInsets.all(14.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                    ds["Image"],
+                                    width: 150.0,
+                                    height: 150.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Text(
+                                  ds["Name"],
+                                  style: AppWidget.semiBoldTextFieldStyle(),
+                                ),
+                                const SizedBox(height: 5.0),
+                                Text(
+                                  ds["Detail"],
+                                  style: AppWidget.LightTextFieldStyle(),
+                                ),
+                                Text(
+                                  "Rs." + ds["Price"],
+                                  style: AppWidget.semiBoldTextFieldStyle(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  })
+              : CircularProgressIndicator();
+        });
+  }
+
+  Widget allItemsVertically() {
+    return StreamBuilder(
+        stream: foodItemStream,
+        builder: (context, AsyncSnapshot snapshot) {
+          return snapshot.hasData
+              ? ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: snapshot.data.docs.length,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot ds = snapshot.data.docs[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Details(
+                                    detail: ds["Detail"],
+                                    image: ds["Image"],
+                                    name: ds["Name"],
+                                    price: ds["Price"])));
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 20.0, bottom: 20),
+                        child: Material(
+                          elevation: 5.0,
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Container(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: Image.network(
+                                    ds["Image"],
+                                    width: 120.0,
+                                    height: 120.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const SizedBox(width: 20.0),
+                                Column(
+                                  children: [
+                                    Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: Text(
+                                        ds["Name"],
+                                        style:
+                                            AppWidget.semiBoldTextFieldStyle(),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5.0),
+                                    Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: Text(
+                                        ds["Detail"],
+                                        style: AppWidget.LightTextFieldStyle(),
+                                      ),
+                                    ),
+                                    Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: Text(
+                                        ds["Price"],
+                                        style:
+                                            AppWidget.semiBoldTextFieldStyle(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  })
+              : CircularProgressIndicator();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +208,7 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Hello Chamindu,",
+                    "Hello ${name ?? ''},",
                     style: AppWidget.boldTextFieldStyle(),
                   ),
                   Container(
@@ -43,7 +223,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Order(),
+                            builder: (context) => const Profile(),
                           ),
                         );
                       },
@@ -68,188 +248,9 @@ class _HomeState extends State<Home> {
               Container(
                   margin: const EdgeInsets.only(right: 20), child: showItem()),
               const SizedBox(height: 30.0),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Details()));
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.all(4),
-                        child: Material(
-                          elevation: 5.0,
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Container(
-                            padding: const EdgeInsets.all(14.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  "images/SeafoodCheeseKottu.png",
-                                  width: 150.0,
-                                  height: 150.0,
-                                  fit: BoxFit.cover,
-                                ),
-                                Text(
-                                  "Seafood Cheese",
-                                  style: AppWidget.semiBoldTextFieldStyle(),
-                                ),
-                                const SizedBox(height: 5.0),
-                                Text(
-                                  "Free and Healthy",
-                                  style: AppWidget.LightTextFieldStyle(),
-                                ),
-                                Text(
-                                  "Rs.2340",
-                                  style: AppWidget.semiBoldTextFieldStyle(),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 15.0),
-                    Container(
-                      margin: const EdgeInsets.all(4),
-                      child: Material(
-                        elevation: 5.0,
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(14.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                "images/EggCheeseKottu.png",
-                                width: 150.0,
-                                height: 150.0,
-                                fit: BoxFit.cover,
-                              ),
-                              Text(
-                                "Egg Cheese Kottu",
-                                style: AppWidget.semiBoldTextFieldStyle(),
-                              ),
-                              const SizedBox(height: 5.0),
-                              Text(
-                                "Spicy with cheese",
-                                style: AppWidget.LightTextFieldStyle(),
-                              ),
-                              Text(
-                                "Rs.1680",
-                                style: AppWidget.semiBoldTextFieldStyle(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              Container(height: 270, child: allItems()),
               const SizedBox(height: 30.0),
-              Container(
-                margin: const EdgeInsets.only(right: 20.0),
-                child: Material(
-                  elevation: 5.0,
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          "images/EggRiceKottu.png",
-                          width: 120.0,
-                          height: 120.0,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(width: 20.0),
-                        Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: Text(
-                                "Egg Rice Kottu-   SMALL -",
-                                style: AppWidget.semiBoldTextFieldStyle(),
-                              ),
-                            ),
-                            const SizedBox(height: 5.0),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: Text(
-                                "Sipicy Kottu with rice",
-                                style: AppWidget.LightTextFieldStyle(),
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: Text(
-                                "Rs.1430",
-                                style: AppWidget.semiBoldTextFieldStyle(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30.0),
-              Container(
-                margin: const EdgeInsets.only(right: 20.0),
-                child: Material(
-                  elevation: 5.0,
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          "images/CuttlefishKottu.png",
-                          width: 120.0,
-                          height: 120.0,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(width: 20.0),
-                        Column(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: Text(
-                                "Cuttle Fish Kottu-   SMALL -",
-                                style: AppWidget.semiBoldTextFieldStyle(),
-                              ),
-                            ),
-                            const SizedBox(height: 5.0),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: Text(
-                                "Better than ever",
-                                style: AppWidget.LightTextFieldStyle(),
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: Text(
-                                "Rs.2800",
-                                style: AppWidget.semiBoldTextFieldStyle(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              allItemsVertically(),
             ],
           ),
         ),
@@ -262,14 +263,15 @@ class _HomeState extends State<Home> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: () {
-            setState(() {
-              icecream = true;
-              pizza = false;
-              salad = false;
-              burger = false;
-              setState(() {});
-            });
+          onTap: () async {
+            icecream = true;
+            pizza = false;
+            salad = false;
+            burger = false;
+
+            foodItemStream = await DatabaseMethods().getFoodItems("Ice-Cream");
+
+            setState(() {});
           },
           child: Material(
             elevation: 5.0,
@@ -288,14 +290,15 @@ class _HomeState extends State<Home> {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            setState(() {
-              icecream = false;
-              pizza = true;
-              salad = false;
-              burger = false;
-              setState(() {});
-            });
+          onTap: () async {
+            icecream = false;
+            pizza = true;
+            salad = false;
+            burger = false;
+
+            foodItemStream = await DatabaseMethods().getFoodItems("Pizza");
+
+            setState(() {});
           },
           child: Material(
             elevation: 5.0,
@@ -314,14 +317,15 @@ class _HomeState extends State<Home> {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            setState(() {
-              icecream = false;
-              pizza = false;
-              salad = true;
-              burger = false;
-              setState(() {});
-            });
+          onTap: () async {
+            icecream = false;
+            pizza = false;
+            salad = true;
+            burger = false;
+
+            foodItemStream = await DatabaseMethods().getFoodItems("Salad");
+
+            setState(() {});
           },
           child: Material(
             elevation: 5.0,
@@ -340,14 +344,15 @@ class _HomeState extends State<Home> {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            setState(() {
-              icecream = false;
-              pizza = false;
-              salad = false;
-              burger = true;
-              setState(() {});
-            });
+          onTap: () async {
+            icecream = false;
+            pizza = false;
+            salad = false;
+            burger = true;
+
+            foodItemStream = await DatabaseMethods().getFoodItems("Burger");
+
+            setState(() {});
           },
           child: Material(
             elevation: 5.0,
