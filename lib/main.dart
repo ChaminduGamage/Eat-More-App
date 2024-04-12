@@ -2,7 +2,6 @@ import 'package:eat_more/admin/add_food.dart';
 import 'package:eat_more/admin/admin_login.dart';
 import 'package:eat_more/admin/home_admin.dart';
 import 'package:eat_more/firebase_options.dart';
-
 import 'package:eat_more/pages/onboard.dart';
 
 import 'package:eat_more/pages/wallet.dart';

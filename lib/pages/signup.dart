@@ -144,7 +144,8 @@ class _SignUpState extends State<SignUp> {
                       child: Container(
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height / 1.5,
+
+                        height: MediaQuery.of(context).size.height / 1.7,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20)),
